@@ -1,4 +1,4 @@
-FROM leddzip/pytorch-generic-model:0.4.0
+FROM leddzip/pytorch-generic-model:0.5.0
 
 # Copy the model configuration and state dictionary
 COPY ./model_architecture.json /app/model_architecture.json
