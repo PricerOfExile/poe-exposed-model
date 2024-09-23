@@ -6,3 +6,5 @@ COPY ./model.pth /app/model.pth
 
 # Inject the transformation logic
 COPY ./transformer.py /app/transformer.py
+
+WORKDIR /app

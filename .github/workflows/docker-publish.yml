@@ -49,5 +49,5 @@ jobs:
           context: .
           push: true
           tags: |
-            leddzip/ppoe-exposed-model:latest
+            leddzip/poe-exposed-model:latest
             leddzip/poe-exposed-model:${{ steps.get_version.outputs.version }}
