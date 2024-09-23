@@ -1,0 +1,32 @@
+{
+  "dropout_rate": null,
+  "with_batch_norm":true,
+  "with_residual":true,
+  "layers":[
+    {
+      "in_size":913,
+      "out_size": 1826,
+      "activation": "LeakyReLU"
+    },
+    {
+      "in_size": 1826,
+      "out_size": 913,
+      "activation": "Tanh"
+    },
+    {
+      "in_size": 913,
+      "out_size": 456,
+      "activation": "Tanh"
+    },
+    {
+      "in_size": 456,
+      "out_size": 128,
+      "activation": "LeakyReLU"
+    },
+    {
+      "in_size": 128,
+      "out_size": 6,
+      "activation": "ReLU"
+    }
+  ]
+}
