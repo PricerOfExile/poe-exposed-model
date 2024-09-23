@@ -1,4 +1,4 @@
-FROM leddzip/pytorch-generic-model:0.2.0
+FROM leddzip/pytorch-generic-model:0.3.0
 
 # Copy the model configuration and state dictionary
 COPY ./model_architecture.json /app/model_architecture.json
@@ -8,3 +8,5 @@ COPY ./model.pth /app/model.pth
 COPY ./transformer.py /app/transformer.py
 
 WORKDIR /app
+
+CMD ["./.venv/bin/python", "generic_pytorch_model/main.py"]
