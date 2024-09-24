@@ -1,6 +1,7 @@
 def reshape(scalar, scale) -> int:
     return scalar*100/scale
 
+
 def translate(input_list: list):
     positive_scale = sum([i for i in input_list if i >= 0])
     return {
