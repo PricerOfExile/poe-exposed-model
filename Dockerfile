@@ -1,4 +1,4 @@
-FROM leddzip/pytorch-generic-model:0.12.0
+FROM leddzip/pytorch-generic-model:0.11.0
 
 COPY ./model_architecture.json /app/model_architecture.json
 COPY ./model.pth /app/model.pth
