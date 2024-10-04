@@ -1,6 +1,13 @@
-# input will be the result of json.load(f)
-def rarity_array(data):
-    rarity = data['rarity']
+from typing import List
+
+def _from_boolean_to_list(value: bool | None) -> List[int]:
+    if value is None:
+        return [0, 0]
+    return [1, 0] if value else [0, 1]
+
+
+def rarity_to_list(data) -> List[int]:
+    rarity = data.get('rarity', 'Unknown')
     if rarity == "Normal":
         return [1, 0, 0]
     elif rarity == "Magic":
@@ -11,8 +18,8 @@ def rarity_array(data):
         return [0, 0, 0]
 
 
-def socket_array(data):
-    socket = data['socket']
+def socker_to_list(data) -> List[int]:
+    socket = data.get('socket', 'Unknown')
     if socket == 'N':
         return [1, 0, 0, 0, 0, 0]
     elif socket == 'A':
@@ -29,83 +36,57 @@ def socket_array(data):
         return [0, 0, 0, 0, 0, 0]
 
 
-def identified_array(data):
-    identified = data['identified']
-    if identified:
-        return [1, 0]
-    else:
-        return [0, 1]
+def identified_to_list(data) -> List[int]:
+    return _from_boolean_to_list(data.get('identified', None))
 
 
-def influence_array(data):
-    influences = data['influences']
+def influences_to_list(data) -> List[int]:
+    influences = data.get('influences', {})
+    return _from_boolean_to_list(influences.get('warlord', None)) + \
+        _from_boolean_to_list(influences.get('elder', None)) + \
+        _from_boolean_to_list(influences.get('shaper', None)) + \
+        _from_boolean_to_list(influences.get('crusader', None)) + \
+        _from_boolean_to_list(influences.get('redeemer', None)) + \
+        _from_boolean_to_list(influences.get('hunter', None))
+
+
+def fractured_to_list(data) -> List[int]:
+    return _from_boolean_to_list(data.get('fractured', None))
+
+
+def synthesised_to_list(data) -> List[int]:
+    return _from_boolean_to_list(data.get('synthesised', None))
+
+
+def duplicated_to_list(data) -> List[int]:
+    return _from_boolean_to_list(data.get('duplicated', None))
+
+
+def split_to_list(data) -> List[int]:
+    return _from_boolean_to_list(data.get('split', None))
+
+
+def corrupted_to_list(data) -> List[int]:
+    return _from_boolean_to_list(data.get('corrupted', None))
+
+
+def qualities_to_list(data) -> List[int]:
+    quality = data.get('qualities', {})
     return [
-        1 if influences['warlord'] else 0,
-        1 if influences['hunter'] else 0,
-        1 if influences['redeemer'] else 0,
-        1 if influences['crusader'] else 0,
-        1 if influences['shaper'] else 0,
-        1 if influences['elder'] else 0,
+        quality.get('attack', 0),
+        quality.get('attribute', 0),
+        quality.get('caster', 0),
+        quality.get('critical', 0),
+        quality.get('defense', 0),
+        quality.get('elemental', 0),
+        quality.get('lifeAndMana', 0),
+        quality.get('physicalAndChaos', 0),
+        quality.get('resistance', 0),
+        quality.get('speed', 0),
     ]
 
 
-def fractured_array(data):
-    fractured = data['fractured']
-    if fractured:
-        return [1, 0]
-    else:
-        return [0, 1]
-
-
-def synthesised_array(data):
-    synthesised = data['synthesised']
-    if synthesised:
-        return [1, 0]
-    else:
-        return [0, 1]
-
-
-def duplicated_array(data):
-    duplicated = data['duplicated']
-    if duplicated:
-        return [1, 0]
-    else:
-        return [0, 1]
-
-
-def split_array(data):
-    split = data['split']
-    if split:
-        return [1, 0]
-    else:
-        return [0, 1]
-
-
-def corrupted_array(data):
-    corrupted = data['corrupted']
-    if corrupted:
-        return [1, 0]
-    else:
-        return [0, 1]
-
-
-def qualities_array(data):
-    qualities = data['qualities']
-    return [
-        qualities["attack"],
-        qualities["attribute"],
-        qualities["caster"],
-        qualities["critical"],
-        qualities["defense"],
-        qualities["elemental"],
-        qualities["lifeAndMana"],
-        qualities["physicalAndChaos"],
-        qualities["resistance"],
-        qualities["speed"]
-    ]
-
-
-def valuated_stats_array(data):
+def valuated_stats_to_list(data) -> List[float]:
     valuated_stats = data.get('valuatedStats', [])
     valuated_stats_dict = {stat['id']: stat['value'] for stat in valuated_stats}
     return [
@@ -987,5 +968,17 @@ def valuated_stats_array(data):
     ]
 
 
-def transform(data):
-    return rarity_array(data) + [data['ilvl']] + identified_array(data) + [data['levelRequirement']] + socket_array(data) + influence_array(data) + fractured_array(data) + synthesised_array(data) + duplicated_array(data) + split_array(data) + corrupted_array(data) + qualities_array(data) + valuated_stats_array(data)
+def transform(data) -> List[int]:
+    return rarity_to_list(data) + \
+        [data.get('ilvl', 0)] + \
+        identified_to_list(data) + \
+        [data.get('levelRequirement', 0)] + \
+        socker_to_list(data) + \
+        influences_to_list(data) + \
+        fractured_to_list(data) + \
+        synthesised_to_list(data) + \
+        duplicated_to_list(data) + \
+        split_to_list(data) + \
+        corrupted_to_list(data) + \
+        qualities_to_list(data) + \
+        valuated_stats_to_list(data)
