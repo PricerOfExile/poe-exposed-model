@@ -4,27 +4,27 @@
   "with_residual":true,
   "layers":[
     {
-      "in_size":913,
-      "out_size": 1826,
+      "in_size":920,
+      "out_size": 1840,
       "activation": "LeakyReLU"
     },
     {
-      "in_size": 1826,
-      "out_size": 913,
+      "in_size": 1840,
+      "out_size": 920,
       "activation": "Tanh"
     },
     {
-      "in_size": 913,
-      "out_size": 456,
+      "in_size": 920,
+      "out_size": 460,
       "activation": "Tanh"
     },
     {
-      "in_size": 456,
-      "out_size": 128,
+      "in_size": 460,
+      "out_size": 230,
       "activation": "LeakyReLU"
     },
     {
-      "in_size": 128,
+      "in_size": 230,
       "out_size": 6,
       "activation": "ReLU"
     }
